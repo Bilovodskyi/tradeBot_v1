@@ -16,6 +16,7 @@ import { fetchConId } from "@/actions/placeOrder/fetchContractId";
 import { placeOrder } from "@/actions/placeOrder/placeOrder";
 import { InputField } from "./InputField";
 import { fetchAccountId } from "@/actions/placeOrder/fetchAccountId";
+import Image from "next/image";
 
 const OpenPositionDialogWindow = ({ stockName }: { stockName: string }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -133,11 +134,11 @@ const OpenPositionDialogWindow = ({ stockName }: { stockName: string }) => {
                             <div className="md:w-1/2 md:py-10 md:pr-12 md:pl-24 flex flex-col gap-8">
                                 <div className="flex flex-col gap-4 items-center">
                                     <div className="rounded-border-container bg-white/10 flex w-[50px] h-[50px] p-1">
-                                        <img
+                                        <Image
                                             src="/ibkr-symbol.svg"
                                             alt="Interactive Brokers"
-                                            loading="lazy"
-                                            className="h-full w-full"
+                                            width={50}
+                                            height={50}
                                         />
                                     </div>
                                     <h2 className="text-zinc-400 text-xl">

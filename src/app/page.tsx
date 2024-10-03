@@ -182,7 +182,7 @@ const Home = () => {
                         <ol className="list-decimal py-2 px-4 text-zinc-500 text-[.9rem]">
                             <li className="py-2">
                                 <p className="text-zinc-500">
-                                    Get Today's Top Stocks by web scraping
+                                    Get Today&apos;s Top Stocks by web scraping
                                     TradinView website.
                                 </p>
                             </li>
