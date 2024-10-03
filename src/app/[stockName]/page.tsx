@@ -7,44 +7,40 @@ import Link from "next/link";
 import { IoMdArrowBack } from "react-icons/io";
 import { fetchSingleStockData } from "@/lib/apiCalls";
 import OpenPositionDialogWindow from "@/components/OpenPositionDialogWindow";
-import { fetchAccountId } from "@/actions/placeOrder/fetchAccountId";
 
 type ParamsProp = {
     stockName: string;
 };
 
 const AlgorithmPage = async ({ params }: { params: ParamsProp }) => {
-    const { stockName } = params;
+    // const { stockName } = params;
 
-    const windowParams = ["20", "30", "40"];
+    // const windowParams = ["20", "30", "40"];
 
-    const data: ArrayOfValues[] = [];
-    let dates: number[] = [];
+    // const data: ArrayOfValues[] = [];
+    // let dates: number[] = [];
 
-    const contract = fetchAccountId();
-    console.log(contract);
+    // for (const window of windowParams) {
+    //     const { resArray, datesArray } = await fetchEMAData({
+    //         window: window,
+    //         ticker: stockName,
+    //     });
+    //     data.push(resArray);
+    //     if (dates.length === 0) {
+    //         dates = datesArray;
+    //     }
+    // }
 
-    for (const window of windowParams) {
-        const { resArray, datesArray } = await fetchEMAData({
-            window: window,
-            ticker: stockName,
-        });
-        data.push(resArray);
-        if (dates.length === 0) {
-            dates = datesArray;
-        }
-    }
+    // const cellColors = getCellsColors(data);
+    // const signal = getSignal(cellColors);
 
-    const cellColors = getCellsColors(data);
-    const signal = getSignal(cellColors);
+    // const singleStockData = await fetchSingleStockData(stockName);
 
-    const singleStockData = await fetchSingleStockData(stockName);
-
-    const barChartData = await fetchBarsForChart(stockName);
+    // const barChartData = await fetchBarsForChart(stockName);
 
     return (
         <div className="h-screen flex flex-col">
-            <div
+            {/* <div
                 className={`w-full px-4 md:px-10 py-12 flex flex-col gap-8 ${
                     signal
                         ? "bg-gradient-to-t from-transparent to-lime-500/30"
@@ -82,7 +78,7 @@ const AlgorithmPage = async ({ params }: { params: ParamsProp }) => {
                         </h1>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="p-2 md:p-10 flex max-md:flex-col gap-8 w-full items-center justify-start md:h-full">
                 <div className="md:flex-1 flex flex-col justify-start md:h-full gap-8">
                     <div className="relative flex flex-col py-5 max-md:p-2 max-md:ml-4">
@@ -107,7 +103,7 @@ const AlgorithmPage = async ({ params }: { params: ParamsProp }) => {
                             </li>
                         </ol>
                     </div>
-                    <div className="py-5 px-2 md:px-20">
+                    {/* <div className="py-5 px-2 md:px-20">
                         <ColorGrid colors={cellColors} dates={dates} />
                         <div className="flex items-center gap-1 mt-6 justify-center">
                             <h1 className="mr-1 text-xl">Signal:</h1>
@@ -117,12 +113,12 @@ const AlgorithmPage = async ({ params }: { params: ParamsProp }) => {
                                 }`}></div>
                             <p>{signal ? "Buy" : "Don't buy"}</p>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="flex items-center justify-center md:h-full">
                         <OpenPositionDialogWindow stockName={"stockName"} />
                     </div>
                 </div>
-                <BarChart data={barChartData} />
+                {/* <BarChart data={barChartData} /> */}
             </div>
         </div>
     );

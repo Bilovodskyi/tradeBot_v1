@@ -1,17 +1,22 @@
 "use server";
 
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "chrome-aws-lambda";
 
 export async function scrapeStockPrice() {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath,
+        headless: chromium.headless,
+    });
     const page = await browser.newPage();
     try {
         await page.setViewport({ width: 1920, height: 1080 });
 
-        const url = process.env.SOME_WEBSITE_FOR_SCRAPING;
+        const url = process.env.NEXT_PUBLIC_SOME_WEBSITE_FOR_SCRAPING;
         if (!url) {
             throw new Error(
-                "Environment variable SOME_WEBSITE_FOR_SCRAPING is not set."
+                "Environment variable NEXT_PUBLIC_SOME_WEBSITE_FOR_SCRAPING is not set."
             );
         }
         await page.goto(url);

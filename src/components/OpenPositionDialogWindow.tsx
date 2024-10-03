@@ -198,13 +198,21 @@ const OpenPositionDialogWindow = ({ stockName }: { stockName: string }) => {
                             </h1>
                         )}
                         <div className="flex justify-center py-16 flex-col items-center gap-6">
-                            <Button
-                                onClick={handleSubmit(handleOpenPosion)}
-                                text="Run Bot"
-                                glowing
-                            />
+                            {process.env.NEXT_PUBLIC_IS_LOCAL === "true" ? (
+                                <Button
+                                    onClick={handleSubmit(handleOpenPosion)}
+                                    text="Run Bot"
+                                    glowing
+                                />
+                            ) : (
+                                <p className="text-center">
+                                    You can open position only using local
+                                    version of this website. Check GitHub repo
+                                    for more details.
+                                </p>
+                            )}
                             <h1
-                                className="text-zinc-400"
+                                className="md:hidden text-zinc-400"
                                 onClick={handleCloseModal}>
                                 Go back
                             </h1>
