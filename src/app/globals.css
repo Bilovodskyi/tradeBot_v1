@@ -2,32 +2,253 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@font-face {
+    font-family: "Aeonik Pro Medium";
+    src: url("/public/tradeBot.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    /* background-color: #131722; */
+    background-color: rgb(9, 9, 11);
+    color: rgb(237, 237, 237);
+    font-size: 0.9rem;
+    font-family: "Aeonik Pro Medium", sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.metalic-text {
+    background: linear-gradient(
+        90deg,
+        rgba(181, 203, 245, 1) 0%,
+        rgba(195, 215, 250, 0.95) 25%,
+        rgba(181, 203, 245, 1) 50%,
+        rgba(165, 185, 235, 0.95) 75%,
+        rgba(181, 203, 245, 1) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.spotlight {
+    width: 3px;
+    height: calc(100vh - 65px);
+    background: linear-gradient(
+        to bottom,
+        rgba(181, 203, 245, 0.9) 0%,
+        rgba(181, 203, 245, 0.6) 50%,
+        rgba(181, 203, 245, 0.3) 100%
+    );
+    position: absolute;
+    top: 65px;
+    transform-origin: top center;
+    filter: blur(8px);
+    opacity: 0.9;
+}
+
+.fading-lines {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    width: 300px;
+    /* position: absolute; */
+}
+
+.fading-lines::before,
+.fading-lines::after {
+    content: "";
+    flex: 1;
+    height: 0.5px;
+}
+
+.fading-lines::before {
+    margin-right: 10px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.5)
+    );
+}
+
+.fading-lines::after {
+    margin-left: 10px;
+    background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.5));
+}
+
+/* Main Page Cards Section */
+.rotated-div-left {
+    transform: 
+    /* translate(-420px) */ perspective(1000px) rotateY(-10deg);
+}
+
+.rotated-div-right {
+    transform: /*translate(100px)*/ perspective(1000px) rotateY(10deg);
+}
+
+.rotated-div-left::before,
+.rotated-div-left::after,
+.rotated-div-right::before,
+.rotated-div-right::after {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.6;
+}
+
+.rotated-div-left::before {
+    bottom: 10px;
+    left: 10px;
+}
+
+.rotated-div-left::after {
+    top: 10px;
+    left: 10px;
+}
+
+.rotated-div-right::before {
+    bottom: 10px;
+    right: 10px;
+}
+
+.rotated-div-right::after {
+    top: 10px;
+    right: 10px;
+}
+
+.rotated-div-center::before {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    top: 10px;
+    left: 10px;
+    box-shadow: 0 396px 0 0 white, /* Bottom-left dot */ 346px 0 0 0 white,
+        /* Top-right dot */ 346px 396px 0 0 white; /* Bottom-right dot */
+}
+/* End of Main Page Cards Section */
+
+/* Dialog Decoration Dots Section */
+.dialog-decoration-dots::before {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    top: 20px;
+    left: 20px;
+    box-shadow: 0 696px 0 0 white, /* Bottom-left dot */ 848px 0 0 0 white,
+        /* Top-right dot */ 848px 696px 0 0 white; /* Bottom-right dot */
+}
+
+/* End of Dialog Decoration Dots Section */
+
+/* Button Animation Section */
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.glowing-border-button {
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    background: linear-gradient(
+        var(--angle),
+        #24282e,
+        #da8ee7,
+        rgba(181, 203, 245, 1)
+    );
+    animation: rotate 5s linear infinite;
+    z-index: 2;
+    border: none;
+    overflow: hidden;
+}
+
+/* Pseudo-element to cover the button background */
+.glowing-border-button::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+    border-radius: inherit;
+    background-color: #24282e;
+    z-index: -1;
+}
+
+/* Keyframe animation for the glowing effect */
+@keyframes rotate {
+    0% {
+        --angle: 0deg;
+    }
+    100% {
+        --angle: 360deg;
+    }
+}
+/* End of Button Animation Section */
+
+/* Loading Section */
+
+.running-algorithm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #a1a1aa;
+    border-radius: 50%;
+    animation: bounce 1s infinite ease-in-out;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* End of Loading Section */
+
+.stock-section-button {
+    @apply text-zinc-400 hover:text-zinc-200 transition-colors duration-150 cursor-pointer;
+}
+
+.rounded-border-container {
+    @apply border border-zinc-700 rounded-xl;
+}
+
+.horizontal-line {
+    @apply absolute w-full h-[0.5px] bg-gradient-to-r from-transparent via-white/20 to-transparent top-1/2 transform;
+}
+
+.vertical-line {
+    @apply absolute h-full w-[0.5px] bg-white/20 left-1/2 transform;
 }
