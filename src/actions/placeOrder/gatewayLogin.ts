@@ -1,6 +1,5 @@
 "use server";
-import puppeteer from "puppeteer-core";
-import chromium from "chrome-aws-lambda";
+import puppeteer from "puppeteer";
 
 export async function gatewayLogin({
     email,
@@ -9,20 +8,15 @@ export async function gatewayLogin({
     email: string;
     password: string;
 }) {
-    let browser = null;
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--ignore-certificate-errors",
+        ],
+    });
     try {
-        browser = await puppeteer.launch({
-            executablePath: await chromium.executablePath,
-            headless: chromium.headless,
-            args: [
-                ...chromium.args,
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--ignore-certificate-errors",
-            ],
-            // Optional: Set defaultViewport to null to use the default viewport size
-            defaultViewport: chromium.defaultViewport,
-        });
         const page = await browser.newPage();
         await page.goto("https://localhost:5555", {
             waitUntil: "networkidle2",
@@ -38,10 +32,11 @@ export async function gatewayLogin({
         ]);
 
         await page.close();
-        await browser.close();
         return { success: true };
     } catch (error) {
         console.error("Login failed:", error);
         return { success: false, error };
+    } finally {
+        await browser.close();
     }
 }

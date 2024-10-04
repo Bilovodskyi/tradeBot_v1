@@ -47,20 +47,26 @@ const Home = () => {
 
     const handleRunBot = async () => {
         setIsLoading(true);
-        const storedData = sessionStorage.getItem("dataArray");
-        if (storedData) {
-            const parsedData = JSON.parse(storedData);
-            pickTopStocks(parsedData);
-        } else {
-            const scrapedDataArray = await scrapeStockPrice();
-            sessionStorage.setItem(
-                "dataArray",
-                JSON.stringify(scrapedDataArray)
-            );
-            pickTopStocks(scrapedDataArray);
+        try {
+            const storedData = sessionStorage.getItem("dataArray");
+            if (storedData) {
+                const parsedData = JSON.parse(storedData);
+                pickTopStocks(parsedData);
+            } else if (process.env.NEXT_PUBLIC_IS_LOCAL === "false") {
+                setGeneratedItems(DEFAULT_DATA);
+            } else {
+                const scrapedDataArray = await scrapeStockPrice();
+                sessionStorage.setItem(
+                    "dataArray",
+                    JSON.stringify(scrapedDataArray)
+                );
+                pickTopStocks(scrapedDataArray);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
         }
-
-        setIsLoading(false);
     };
 
     const pickTopStocks = (dataArray: scrapedDataArray[]) => {

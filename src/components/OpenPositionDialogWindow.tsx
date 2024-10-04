@@ -80,7 +80,6 @@ const OpenPositionDialogWindow = ({ stockName }: { stockName: string }) => {
             setLoadingText("Done!");
             // await logout();
         } catch (error) {
-            setLoading(false);
             if (error instanceof Error) {
                 setLoading(false);
                 setError(error.message);
@@ -88,8 +87,9 @@ const OpenPositionDialogWindow = ({ stockName }: { stockName: string }) => {
                 setLoading(false);
                 setError("Unexpected error ocured! Try again!");
             }
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const handleCloseModal = () => {
@@ -198,18 +198,18 @@ const OpenPositionDialogWindow = ({ stockName }: { stockName: string }) => {
                             </h1>
                         )}
                         <div className="flex justify-center py-16 flex-col items-center gap-6">
-                            {process.env.NEXT_PUBLIC_IS_LOCAL === "true" ? (
-                                <Button
-                                    onClick={handleSubmit(handleOpenPosion)}
-                                    text="Run Bot"
-                                    glowing
-                                />
-                            ) : (
+                            {process.env.NEXT_PUBLIC_IS_LOCAL === "false" ? (
                                 <p className="text-center">
                                     You can open position only using local
                                     version of this website. Check GitHub repo
                                     for more details.
                                 </p>
+                            ) : (
+                                <Button
+                                    onClick={handleSubmit(handleOpenPosion)}
+                                    text="Run Bot"
+                                    glowing
+                                />
                             )}
                             <h1
                                 className="md:hidden text-zinc-400"
