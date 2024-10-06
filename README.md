@@ -37,11 +37,11 @@ npm install
 6. Modify the startGateway.ts file.
 Navigate to the project folder: src -> actions -> placeOrder -> startGateway.ts and change this line of code to the path where the "clientportal" folder is located on your machine:
 ``` js
-        { cwd: "/Users/bohdanbilovodskyi/Downloads/clientportal" },
+{ cwd: "/Users/bohdanbilovodskyi/Downloads/clientportal" },
 ```
 7. One more detail: go to the "clientportal" folder -> root -> conf.yaml, open it using your text editor (e.g., VS Code), and change the listenPort from 5000 to 5555:
 ``` js
-       listenPort: 5000
+listenPort: 5000
 ```
 8. You're all done! Now you are ready to use the IB Automation Trading Bot.
 
@@ -49,8 +49,10 @@ Navigate to the project folder: src -> actions -> placeOrder -> startGateway.ts 
 
 Since the Interactive Brokers (IB) Gateway doesn't provide SSL certificates by default, I decided to turn off SSL checks in my application for simplicity.
 
-However, as this can introduce security risks, you can create and self-sign SSL certificates. You can follow the official IB documentation for how to install SSL certificates: [find section "Invalid SSL certificate"]((https://interactivebrokers.github.io/cpwebapi/use-cases))
+However, as this can introduce security risks, you can create and self-sign SSL certificates. You can follow the official IB documentation for how to install SSL certificates: [find section "Invalid SSL certificate"](https://interactivebrokers.github.io/cpwebapi/use-cases)
+
 Additionally, you will need to update the following files (Follow these steps only if you are using self-signed certificates.):
+
 1. Go to fetchAccountId.ts, fetchContractId.ts, and placeOrder.ts and change rejectUnauthorized to true:
 ``` js
         const agent = new https.Agent({
