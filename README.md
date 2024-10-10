@@ -1,5 +1,3 @@
-
-
 # 📚 About
 This is a Next.js project. It consist of 3 parts. 
 
