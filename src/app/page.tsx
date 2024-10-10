@@ -88,7 +88,7 @@ const Home = () => {
     };
 
     const handleLinkToGitHub = () => {
-        window.open("https://github.com/Bilovodskyi/tradingBot", "_blank");
+        window.open("https://github.com/Bilovodskyi/tradeBot_v1", "_blank");
     };
 
     return (
@@ -194,7 +194,7 @@ const Home = () => {
                             </li>
                             <li className="py-2">
                                 <p className="text-zinc-500">
-                                    Then ChatGPT will analize resieved data.
+                                    Then algorithm will analize resieved data.
                                     Based on RSI, Tech rating, MA rating and Os
                                     rating.
                                 </p>

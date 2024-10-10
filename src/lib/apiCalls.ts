@@ -35,7 +35,7 @@ export const fetchBarsForChart = async (ticker: string | string[]) => {
     const cacheKey = `fetchBarsForChart-${ticker}`;
     return cacheApiCall(cacheKey, async () => {
         const res = await axios(
-            `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${threeMonthAgoDate}/${todaysDate}?adjusted=true&sort=asc&apiKey=Q1i9YHDZMCwztCo4za8v_KAp0KnRJe9A`
+            `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${threeMonthAgoDate}/${todaysDate}?adjusted=true&sort=asc&apiKey=${process.env.NEXT_PUBLIC_API_KEY}`
         );
         return res.data.results;
     });
